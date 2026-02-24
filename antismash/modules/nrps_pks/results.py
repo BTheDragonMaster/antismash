@@ -188,6 +188,8 @@ class NRPS_PKS_Results(ModuleResults):
         assert domain.name in ["AMP-binding", "A-OX"]
         predictions = self.domain_predictions[domain.feature_name]
         domain.add_prediction("substrate consensus", generate_nrps_consensus(predictions))
+        if "paras" in predictions:
+            domain.add_prediction("paras", f"{predictions['paras'].predicted_substrate} ({predictions['paras'].confidence:.2f})")
 
     def _annotate_at_domain(self, domain: NRPSPKSQualifier.Domain, transat_cluster: bool) -> None:
         assert domain.name == "PKS_AT"
