@@ -18,6 +18,7 @@ from .minowa.base import MinowaPrediction
 from .nrpys import PredictorSVMResult
 from .pks_names import get_short_form
 from .at_analysis.at_analysis import ATPrediction
+from .paras import ParasResult, ParasectResult
 
 
 UNKNOWN = "(unknown)"
@@ -73,6 +74,10 @@ def modify_substrate(module: Module, base: str = "") -> str:  # pylint: disable=
     if base.endswith("mmal"):
         state.append("Me")
         base = base.replace("mmal", "mal", 1)
+
+    if "Epimerization" in domains:
+        conversions = {"Ile": "aIle", "aIle": "Ile", "Thr": "aThr", "aThr": "Thr"}
+        base = conversions.get(base, base)
 
     state.append(base)
 
@@ -163,6 +168,10 @@ class NRPS_PKS_Results(ModuleResults):
             for method, prediction in method_predictions.items():
                 if method == "nrpys":
                     rebuilt: Prediction = PredictorSVMResult.from_json(prediction)
+                elif method == "paras":
+                    rebuilt: Prediction = ParasResult.from_json(prediction)
+                elif method == "parasect":
+                    rebuilt: Prediction = ParasectResult.from_json(prediction)
                 elif method.startswith("minowa"):
                     rebuilt = MinowaPrediction.from_json(prediction)
                 elif method == "signature":

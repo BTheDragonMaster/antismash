@@ -31,7 +31,8 @@ install_requires = [
     'orjson',
     'scipy',
     'scikit-learn >= 0.19.0',
-    'MOODS-python'
+    'MOODS-python',
+    'paras >= 2.0.2'
 ]
 
 tests_require = [

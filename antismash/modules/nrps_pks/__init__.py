@@ -19,6 +19,7 @@ from .at_analysis import prepare_data as at_prepare_data
 from .c_analysis import prepare_data as c_prepare_data
 from .kr_analysis import prepare_data as kr_prepare_data
 from .minowa import prepare_data as minowa_prepare_data
+from .paras import prepare_data as paras_prepare_data
 from .nrpys import check_prereqs as nrpys_check_prereqs
 from .orderfinder import C_TERMINAL_PATH, N_TERMINAL_PATH
 
@@ -31,6 +32,7 @@ def prepare_data(logging_only: bool = False) -> List[str]:
     """ Ensures packaged data is fully prepared
 
         Arguments:
+            options: configuration options
             logging_only: whether to return error messages instead of raising exceptions
 
         Returns:
@@ -50,7 +52,7 @@ def prepare_data(logging_only: bool = False) -> List[str]:
             if not logging_only:
                 raise
             failures.append(str(err))
-    for func in [at_prepare_data, c_prepare_data, kr_prepare_data, minowa_prepare_data]:
+    for func in [at_prepare_data, c_prepare_data, kr_prepare_data, minowa_prepare_data, paras_prepare_data]:
         failures.extend(func(logging_only=logging_only))
     return failures
 
